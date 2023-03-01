@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "allowJs": false,
+        "alwaysStrict": true,
+        "module": "CommonJS",
+        "moduleResolution": "Node",
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "outDir": "./dist",
+        "removeComments": true,
+        "rootDir": "./src",
+        "strict": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "target": "ES2020"
+    },
+    "exclude": ["**/node_modules", "**/build", "**/test*", "**/*.test.ts"]
+}

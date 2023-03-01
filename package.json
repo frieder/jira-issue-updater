@@ -1,0 +1,46 @@
+{
+    "name": "jira-issue-updater",
+    "version": "1.0.0",
+    "description": "A Github action that allows to update specific properties of a Jira ticket.",
+    "main": "dist/index.js",
+    "author": "https://github.com/frieder",
+    "license": "MIT",
+    "scripts": {
+        "_build": "./build.mjs",
+        "build": "tsc -noEmit && esbuild src/index.ts --outfile=dist/index.js --platform=node --bundle --minify",
+        "lint": "eslint . --ext .ts",
+        "format": "prettier \"**/*.{ts,md,json,yml}\" --write"
+    },
+    "dependencies": {
+        "@actions/core": "^1.10.0",
+        "axios": "^1.3.4",
+        "axios-retry": "^3.4.0",
+        "yaml": "^2.2.1"
+    },
+    "devDependencies": {
+        "@types/node": "^16.11.7",
+        "@typescript-eslint/eslint-plugin": "^5.54.0",
+        "esbuild": "0.17.10",
+        "eslint": "^8.35.0",
+        "eslint-config-prettier": "^8.6.0",
+        "prettier": "^2.8.4",
+        "typescript": "^4.9.5"
+    },
+    "engines": {
+        "node": ">= 16",
+        "npm": ">= 8"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/frieder/jira-issue-updater.git"
+    },
+    "keywords": [
+        "github",
+        "action",
+        "atlassian",
+        "jira",
+        "issue",
+        "field",
+        "update"
+    ]
+}
