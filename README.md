@@ -1,10 +1,9 @@
 # Jira Issue Updater - Github Action
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/frieder/jira-issue-updater/ci-build.yml?label=Build%20Status)](https://github.com/frieder/jira-issue-updater/actions/workflows/ci-build.yml)
-[![Sonar Coverage](https://img.shields.io/sonar/coverage/frieder_jira-issue-updater/main?server=https%3A%2F%2Fsonarcloud.io&label=Code%20Coverage)]()
+[![Sonar Coverage](https://img.shields.io/sonar/coverage/frieder_jira-issue-updater/main?server=https%3A%2F%2Fsonarcloud.io&label=Code%20Coverage)](https://sonarcloud.io/project/overview?id=frieder_jira-issue-updater)
 [![Open Issues](https://img.shields.io/github/issues-raw/frieder/jira-issue-updater?label=Open%20Issues)](https://github.com/frieder/jira-issue-updater/issues?q=is%3Aopen+is%3Aissue)
 [![Sonar Issues](https://img.shields.io/sonar/violations/frieder_jira-issue-updater/main?format=long&server=https%3A%2F%2Fsonarcloud.io&label=Sonar%20Violations)](https://sonarcloud.io/project/overview?id=frieder_jira-issue-updater)
-[![Snyk Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/frieder/jira-issue-updater?label=Snyk%20Vulnerabilities)](https://app.snyk.io/org/frieder)
 
 A GitHub action to update properties of an existing Jira issue.
 
@@ -107,7 +106,7 @@ time it will be considered failed.
 The ID of the Jira ticket (e.g. XYZ-123).
 
 > This is the only option that must be provided explicitly. All the following options are optional with the
-> requirement that at least one of them is provided. Otherwise this action will not do anything.
+> requirement that at least one of them must be provided.
 
 ### Option: summary
 
@@ -129,9 +128,7 @@ The option is ignored when blank.
 Updates the description of the ticket. <br>
 The option is ignored when blank.
 
-> This option only allows for a simple plaintext to be set. If some rich description with links,
-> paragraphs, bullet points, images is required a custom logic must be used which is not covered
-> (nor planned!) by this action.
+> This option only allows for a simple plaintext to be set.
 
 ### Option: assignee
 
