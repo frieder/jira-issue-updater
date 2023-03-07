@@ -30,7 +30,7 @@ jobs:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
 
       - name: Update Fields
-        uses: frieder/jira-issue-updater@v1
+        uses: frieder/jira-issue-updater@v1.0.1
         with:
           retries: 1
           retryDelay: 10
