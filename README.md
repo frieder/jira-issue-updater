@@ -18,50 +18,50 @@ name: Jira Issue Updater
 on: [..]
 
 jobs:
-    update-jira-issue:
-        name: Update Jira issue
-        runs-on: ubuntu-latest
-        steps:
-            - name: Login
-              uses: atlassian/gajira-login@v3
-              env:
-                  JIRA_BASE_URL: ${{ vars.JIRA_BASE_URL }}
-                  JIRA_USER_EMAIL: ${{ vars.JIRA_USER_EMAIL }}
-                  JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+  update-jira-issue:
+    name: Update Jira issue
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login
+        uses: atlassian/gajira-login@v3
+        env:
+          JIRA_BASE_URL: ${{ vars.JIRA_BASE_URL }}
+          JIRA_USER_EMAIL: ${{ vars.JIRA_USER_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
 
-            - name: Update Fields
-              uses: frieder/jira-issue-updater@v1
-              with:
-                  retries: 1
-                  retryDelay: 10
-                  timeout: 2000
-                  issue: XYZ-123
-                  summary: Some new fancy title
-                  description: Plaintext only
-                  assignee: 123456:12345678-abcd-abcd-abcd-1234567890ab
-                  priority: Lowest
-                  duedate: 2023-02-01
-                  components: |
-                      = component1
-                      = component2
-                      + component3
-                      - component2
-                  fixversions: |
-                      = 1.0
-                      = 1.1
-                      + 2.0
-                      - 1.1
-                  labels: |
-                      = foo
-                      = foo2
-                      = bar2
-                      + bar
-                      - foo2
-                      - bar2
-                  customfields: |
-                      10050: some value
-                      10051: 2023-01-01
-                      10052: https://github.com/marketplace?type=action
+      - name: Update Fields
+        uses: frieder/jira-issue-updater@v1
+        with:
+          retries: 1
+          retryDelay: 10
+          timeout: 2000
+          issue: XYZ-123
+          summary: Some new fancy title
+          description: Plaintext only
+          assignee: 123456:12345678-abcd-abcd-abcd-1234567890ab
+          priority: Lowest
+          duedate: 2023-02-01
+          components: |
+            = component1
+            = component2
+            + component3
+            - component2
+          fixversions: |
+            = 1.0
+            = 1.1
+            + 2.0
+            - 1.1
+          labels: |
+            = foo
+            = foo2
+            = bar2
+            + bar
+            - foo2
+            - bar2
+          customfields: |
+            10050: some value
+            10051: 2023-01-01
+            10052: https://github.com/marketplace?type=action
 ```
 
 ## Configuration Options
