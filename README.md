@@ -1,10 +1,9 @@
 # Jira Issue Updater - Github Action
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/frieder/jira-issue-updater/ci-build.yml?label=Build%20Status)](https://github.com/frieder/jira-issue-updater/actions/workflows/ci-build.yml)
-[![Sonar Coverage](https://img.shields.io/sonar/coverage/frieder_jira-issue-updater/main?server=https%3A%2F%2Fsonarcloud.io&label=Code%20Coverage)]()
+[![Sonar Coverage](https://img.shields.io/sonar/coverage/frieder_jira-issue-updater/main?server=https%3A%2F%2Fsonarcloud.io&label=Code%20Coverage)](https://sonarcloud.io/project/overview?id=frieder_jira-issue-updater)
 [![Open Issues](https://img.shields.io/github/issues-raw/frieder/jira-issue-updater?label=Open%20Issues)](https://github.com/frieder/jira-issue-updater/issues?q=is%3Aopen+is%3Aissue)
 [![Sonar Issues](https://img.shields.io/sonar/violations/frieder_jira-issue-updater/main?format=long&server=https%3A%2F%2Fsonarcloud.io&label=Sonar%20Violations)](https://sonarcloud.io/project/overview?id=frieder_jira-issue-updater)
-[![Snyk Vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/frieder/jira-issue-updater?label=Snyk%20Vulnerabilities)](https://app.snyk.io/org/frieder)
 
 A GitHub action to update properties of an existing Jira issue.
 
@@ -19,50 +18,50 @@ name: Jira Issue Updater
 on: [..]
 
 jobs:
-  update-jira-issue:
-    name: Update Jira issue
-    runs-on: ubuntu-latest
-    steps:
-      - name: Login
-        uses: atlassian/gajira-login@v3
-        env:
-          JIRA_BASE_URL: ${{ vars.JIRA_BASE_URL }}
-          JIRA_USER_EMAIL: ${{ vars.JIRA_USER_EMAIL }}
-          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+    update-jira-issue:
+        name: Update Jira issue
+        runs-on: ubuntu-latest
+        steps:
+            - name: Login
+              uses: atlassian/gajira-login@v3
+              env:
+                  JIRA_BASE_URL: ${{ vars.JIRA_BASE_URL }}
+                  JIRA_USER_EMAIL: ${{ vars.JIRA_USER_EMAIL }}
+                  JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
 
-      - name: Update Fields
-        uses: frieder/jira-issue-updater@v1
-        with:
-          retries: 1
-          retryDelay: 10
-          timeout: 2000
-          issue: XYZ-123
-          summary: Some new fancy title
-          description: Plaintext only
-          assignee: 123456:12345678-abcd-abcd-abcd-1234567890ab
-          priority: Lowest
-          duedate: 2023-02-01
-          components: |
-            = component1
-            = component2
-            + component3
-            - component2
-          fixversions: |
-            = 1.0
-            = 1.1
-            + 2.0
-            - 1.1
-          labels: |
-            = foo
-            = foo2
-            = bar2
-            + bar
-            - foo2
-            - bar2
-          customfields: |
-            10050: some value
-            10051: 2023-01-01
-            10052: https://github.com/marketplace?type=action
+            - name: Update Fields
+              uses: frieder/jira-issue-updater@v1
+              with:
+                  retries: 1
+                  retryDelay: 10
+                  timeout: 2000
+                  issue: XYZ-123
+                  summary: Some new fancy title
+                  description: Plaintext only
+                  assignee: 123456:12345678-abcd-abcd-abcd-1234567890ab
+                  priority: Lowest
+                  duedate: 2023-02-01
+                  components: |
+                      = component1
+                      = component2
+                      + component3
+                      - component2
+                  fixversions: |
+                      = 1.0
+                      = 1.1
+                      + 2.0
+                      - 1.1
+                  labels: |
+                      = foo
+                      = foo2
+                      = bar2
+                      + bar
+                      - foo2
+                      - bar2
+                  customfields: |
+                      10050: some value
+                      10051: 2023-01-01
+                      10052: https://github.com/marketplace?type=action
 ```
 
 ## Configuration Options
@@ -107,7 +106,7 @@ time it will be considered failed.
 The ID of the Jira ticket (e.g. XYZ-123).
 
 > This is the only option that must be provided explicitly. All the following options are optional with the
-> requirement that at least one of them is provided. Otherwise this action will not do anything.
+> requirement that at least one of them must be provided.
 
 ### Option: summary
 
@@ -129,9 +128,7 @@ The option is ignored when blank.
 Updates the description of the ticket. <br>
 The option is ignored when blank.
 
-> This option only allows for a simple plaintext to be set. If some rich description with links,
-> paragraphs, bullet points, images is required a custom logic must be used which is not covered
-> (nor planned!) by this action.
+> This option only allows for a simple plaintext to be set.
 
 ### Option: assignee
 

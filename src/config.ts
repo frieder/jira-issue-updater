@@ -7,7 +7,18 @@ export function getLoginData(): JiraLogin {
     const configPath = `${process.env.HOME}/jira/config.yml`;
     const login: JiraLogin = YAML.parse(fs.readFileSync(configPath, "utf8"));
 
-    _verifyLogin(login);
+    if (
+        !login.baseUrl ||
+        login.baseUrl.length === 0 ||
+        !login.email ||
+        login.email.length === 0 ||
+        !login.token ||
+        login.token.length === 0
+    ) {
+        throw new Error(
+            "All login properties must be set. Did you configure the jira-login action properly?"
+        );
+    }
 
     return login;
 }
@@ -31,17 +42,11 @@ export function getInputs(): ActionInputs {
         }),
     };
 
-    _verifyInputs(inputs);
+    if (!inputs.issue || inputs.issue.length === 0) {
+        throw new Error("The issue property must be set.");
+    }
 
     return inputs;
-}
-
-function _verifyLogin(login: JiraLogin) {
-    if (!login.baseUrl || !login.email || !login.token) {
-        throw new Error(
-            "All login properties must be set. Do you use the jira-login action properly?"
-        );
-    }
 }
 
 function _getNumber(name: string, defaultValue: number): number {
@@ -50,28 +55,4 @@ function _getNumber(name: string, defaultValue: number): number {
         return defaultValue;
     }
     return value.match(/^\d+$/) ? Number(value) : defaultValue;
-}
-
-function _verifyInputs(inputs: ActionInputs) {
-    if (!inputs.issue) {
-        throw new Error("The issue property must be set.");
-    }
-    if (
-        !(
-            inputs.summary &&
-            inputs.description &&
-            inputs.assignee &&
-            inputs.priority &&
-            inputs.duedate &&
-            inputs.components &&
-            inputs.fixversions &&
-            inputs.labels &&
-            inputs.customfields
-        )
-    ) {
-        throw new Error(
-            "At least one of the input properties [summary, description, assignee, priority, " +
-                "duedate, components, fixversions, labels, customfields] must be set"
-        );
-    }
 }
