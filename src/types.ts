@@ -8,7 +8,8 @@ export type ActionInputs = {
     retries: number;
     retryDelay: number;
     timeout: number;
-    issue: string;
+    failOnError: boolean;
+    issue: string[];
     summary: string;
     description: string;
     assignee: string;
@@ -18,6 +19,7 @@ export type ActionInputs = {
     fixversions: string[];
     labels: string[];
     customfields: string[];
+    _issueDelimiter: string;
 };
 
 export type Entry = {

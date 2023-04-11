@@ -2,10 +2,15 @@ import { ActionInputs, JiraLogin } from "./types";
 import axios, { AxiosInstance } from "axios";
 import axiosRetry from "axios-retry";
 
-export async function sendRequest(jira: JiraLogin, inputs: ActionInputs, payload: any) {
+export async function sendRequest(
+    jira: JiraLogin,
+    issue: string,
+    inputs: ActionInputs,
+    payload: any
+) {
     const httpClient = _createHTTPClient(jira, inputs);
     _setRetrySettings(httpClient, inputs);
-    await httpClient.put(`/rest/api/3/issue/${inputs.issue}`, payload);
+    await httpClient.put(`/rest/api/3/issue/${issue}`, payload);
 }
 
 function _createHTTPClient(jira: JiraLogin, inputs: ActionInputs): AxiosInstance {

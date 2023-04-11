@@ -30,17 +30,26 @@ jobs:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
 
       - name: Update Fields
-        uses: frieder/jira-issue-updater@v1.0.1
+        id: updatefields
+        uses: frieder/jira-issue-updater@v1.1.0
         with:
           retries: 1
           retryDelay: 10
           timeout: 2000
+          failOnError: true
+          # either one of the following three config option formats of 'issue' are valid
           issue: XYZ-123
+          issue: XYZ-1,XYZ-2,XYZ-3
+          issue: |
+            XYZ-1
+            XYZ-2
+            XYZ-3
           summary: Some new fancy title
           description: Plaintext only
           assignee: 123456:12345678-abcd-abcd-abcd-1234567890ab
           priority: Lowest
           duedate: 2023-02-01
+          resolution: Won't Do
           components: |
             = component1
             = component2
@@ -62,6 +71,13 @@ jobs:
             10050: some value
             10051: 2023-01-01
             10052: https://github.com/marketplace?type=action
+
+      # this action will only be reached when failOnError was set to false in the previous step
+      - name: Print Outputs
+        run: |
+          echo "HAS ERRORS: ${{ steps.updatefields.outputs.hasErrors }}"
+          echo "ID SUCCESS: ${{ steps.updatefields.outputs.successful }}"
+          echo "ID ERROR: ${{ steps.updatefields.outputs.failed }}"
 ```
 
 ## Configuration Options
@@ -74,7 +90,7 @@ jobs:
 | Default  | 1   |
 
 This option allows to define a number of retries when the HTTP call to the Jira REST API fails (e.g. due to
-connectivity issues). By default, the action will attempt one retry and after that report the action as failed.
+connectivity issues). By default, the action will attempt one retry and after that report the request as failed.
 
 ### Option: retryDelay
 
@@ -96,6 +112,17 @@ between the requests.
 The time (in milliseconds) the action will wait for a request to finish. If the request does not finish in
 time it will be considered failed.
 
+### Option: failOnError
+
+|          |      |
+| :------- |:-----|
+| Required | no   |
+| Default  | true |
+
+When set to true (default) the action will report back as failed whenever at least one issue could not be
+updated. When set to false it means the action will never fail (unless an exception occurs outside the requests,
+e.g. when reading login data, parsing inputs etc.). Also check the documentation about outputs of this action.
+
 ### Option: issue
 
 |          |     |
@@ -103,7 +130,11 @@ time it will be considered failed.
 | Required | yes |
 | Default  |     |
 
-The ID of the Jira ticket (e.g. XYZ-123).
+The ID(s) of the Jira ticket (e.g. XYZ-123). This option allows to define one or many issue IDs at the same time.
+For multiple IDs it also allows to define those in two different formats.
+
+* A comma-separated list of issue IDs
+* A line-separated list pf issue IDs
 
 > This is the only option that must be provided explicitly. All the following options are optional with the
 > requirement that at least one of them must be provided.
@@ -171,6 +202,16 @@ The option is ignored when blank.
 
 Updates the due date of the ticket. The format must be in ISO 8601 format - `yyyy-MM-dd`. <br>
 The option is ignored when blank. To remove the assignee set the value to `REMOVE`.
+
+### Option: resolution
+
+|          |     |
+| :------- | :-- |
+| Required | no  |
+| Default  |     |
+
+Updates the resolution of the ticket. <br>
+The option is ignored when blank. To remove the resolution set the value to `REMOVE`.
 
 ### Option: components
 
@@ -278,3 +319,17 @@ with their associated value, separated by a colon (`:`). One entry per line.
 > interpreted as a delimiter.
 
 The option is ignored when blank.
+
+## Outputs
+
+This action provides some information via outputs for post-processing. Following is an overview of the keys registered
+with the action's output.
+
+1. `hasErrors` - A boolean value indicating whether there are issues that have not been updated successfully. This is
+   useful when the `failOnError` option is set to `false` and one still wants to check if there have been
+   failed update attempts.
+2. `successful` - A list of IDs of issues that have successfully been updated. The format is the same as used with the
+   `issues` option (either comma or line separated).
+3. `failed` - A list of IDs of issues that failed to get updated. This may be useful to add comments to the tickets
+   in question or to report those tickets to a Slack or MSTeams channel. The format is again the same as
+   with the `issues` option.
