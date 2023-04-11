@@ -17,8 +17,13 @@ inputs:
     description: The time in milliseconds in which a request must finish or otherwise considered failed.
     required: false
     default: 2000
+  failOnError:
+    description: Should the action report back as failed when at least one issue cannot be updated.
+    type: boolean
+    required: false
+    default: true
   issue:
-    description: The ID of the Jira issue.
+    description: The ID(s) of the Jira issue(s).
     required: true
   summary:
     description: The title (summary) of the Jira ticket.
@@ -34,6 +39,9 @@ inputs:
     required: false
   duedate:
     description: Define the due date of a ticket.
+    required: false
+  resolution:
+    description: Define the resolution of the ticket.
     required: false
   components:
     description: Define components to be added/removed/set to the ticket.
