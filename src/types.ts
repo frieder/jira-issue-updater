@@ -15,6 +15,7 @@ export type ActionInputs = {
     assignee: string;
     priority: string;
     duedate: string;
+    resolution: string;
     components: string[];
     fixversions: string[];
     labels: string[];

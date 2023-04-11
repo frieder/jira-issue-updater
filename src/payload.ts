@@ -8,6 +8,7 @@ export function createPayload(inputs: ActionInputs): any {
 
     _addSummary(inputs.summary, payload);
     _addDueDate(inputs.duedate, payload);
+    _addResolution(inputs.resolution, payload);
 
     _addDescription(inputs.description, payload);
     _addAssignee(inputs.assignee, payload);
@@ -36,6 +37,14 @@ function _addDueDate(value: string, payload: any) {
     }
 
     payload.fields["duedate"] = value !== "REMOVE" ? value : null;
+}
+
+function _addResolution(resolution: string, payload: any) {
+    if (!resolution) {
+        return;
+    }
+
+    payload.fields["resolution"] = { name: resolution };
 }
 
 function _addDescription(description: string, payload: any) {

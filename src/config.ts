@@ -49,6 +49,7 @@ export function getInputs(): ActionInputs {
         assignee: getInput("assignee", inputOpts),
         priority: getInput("priority", inputOpts),
         duedate: getInput("duedate", inputOpts),
+        resolution: getInput("resolution", inputOpts),
         components: getMultilineInput("components", inputOpts),
         fixversions: getMultilineInput("fixversions", inputOpts),
         labels: getMultilineInput("labels", inputOpts),
