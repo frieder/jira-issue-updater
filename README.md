@@ -37,14 +37,14 @@ jobs:
           retryDelay: 10
           timeout: 2000
           failOnError: true
-          # either one of the following three config option formats of 'issue' are valid
+          # either one of the following three config option formats of 'issue' is valid
           issue: XYZ-123
           issue: XYZ-1,XYZ-2,XYZ-3
           issue: |
             XYZ-1
             XYZ-2
             XYZ-3
-          summary: Some new fancy title
+          summary: Some fancy title
           description: Plaintext only
           assignee: 123456:12345678-abcd-abcd-abcd-1234567890ab
           priority: Lowest
@@ -76,8 +76,8 @@ jobs:
       - name: Print Outputs
         run: |
           echo "HAS ERRORS: ${{ steps.updatefields.outputs.hasErrors }}"
-          echo "ID SUCCESS: ${{ steps.updatefields.outputs.successful }}"
-          echo "ID ERROR: ${{ steps.updatefields.outputs.failed }}"
+          echo "IDs SUCCESS: ${{ steps.updatefields.outputs.successful }}"
+          echo "IDs ERROR: ${{ steps.updatefields.outputs.failed }}"
 ```
 
 ## Configuration Options
@@ -201,7 +201,7 @@ The option is ignored when blank.
 | Default  |     |
 
 Updates the due date of the ticket. The format must be in ISO 8601 format - `yyyy-MM-dd`. <br>
-The option is ignored when blank. To remove the assignee set the value to `REMOVE`.
+The option is ignored when blank. To remove the due date set the value to `REMOVE`.
 
 ### Option: resolution
 
@@ -211,7 +211,7 @@ The option is ignored when blank. To remove the assignee set the value to `REMOV
 | Default  |     |
 
 Updates the resolution of the ticket. <br>
-The option is ignored when blank. To remove the resolution set the value to `REMOVE`.
+The option is ignored when blank.
 
 ### Option: components
 
