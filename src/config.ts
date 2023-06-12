@@ -54,6 +54,7 @@ export function getInputs(): ActionInputs {
         fixversions: getMultilineInput("fixversions", inputOpts),
         labels: getMultilineInput("labels", inputOpts),
         customfields: getMultilineInput("customfields", inputOpts),
+        customfieldsJson: getMultilineInput("customfieldsJson", inputOpts),
         _issueDelimiter: delim,
     };
 

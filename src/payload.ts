@@ -18,7 +18,8 @@ export function createPayload(inputs: ActionInputs): any {
     _addFixVersions(inputs.fixversions, payload);
     _addLabels(inputs.labels, payload);
 
-    _addCustomFields(inputs.customfields, payload);
+    _addCustomFields(inputs.customfields, payload, false);
+    _addCustomFields(inputs.customfieldsJson, payload, true);
 
     return payload;
 }
@@ -116,12 +117,12 @@ function _addLabels(labels: string[], payload: any) {
     _addLabelsToPayload(entries, payload);
 }
 
-function _addCustomFields(customFields: string[], payload: any) {
+function _addCustomFields(customFields: string[], payload: any, parseJsonValues: boolean) {
     if (!customFields) {
         return;
     }
 
-    const entries = _extractCustomFields(customFields);
+    const entries = _extractCustomFields(customFields, parseJsonValues);
     _addCustomFieldsToPayload(entries, payload);
 }
 
@@ -153,7 +154,7 @@ function _groupEntries(rawEntries: string[]): GroupedEntries {
     return entries;
 }
 
-function _extractCustomFields(rawEntries: string[]): Entry[] {
+function _extractCustomFields(rawEntries: string[], parseJsonValues: boolean): Entry[] {
     const entries: Entry[] = [];
     const regex = /^(\d+)\s*:\s*(\S.*)$/gi;
 
@@ -161,7 +162,7 @@ function _extractCustomFields(rawEntries: string[]): Entry[] {
         const match = regex.exec(line);
 
         if (match && match.length === 3) {
-            entries.push({ key: match[1], value: match[2].trim() });
+            entries.push({ key: match[1], value: parseJsonValues ? JSON.parse(match[2]) : match[2].trim() });
         }
 
         regex.lastIndex = 0;

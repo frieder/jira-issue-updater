@@ -55,6 +55,9 @@ inputs:
   customfields:
     description: A list of custom fields with their respective values.
     required: false
+  customfieldsJson:
+    description: A list of custom fields with their respective values in JSON. Supports Atlassian Documents and multiple values.
+    required: false
 runs:
   using: node16
   main: ./dist/index.js
