@@ -162,7 +162,10 @@ function _extractCustomFields(rawEntries: string[], parseJsonValues: boolean): E
         const match = regex.exec(line);
 
         if (match && match.length === 3) {
-            entries.push({ key: match[1], value: parseJsonValues ? JSON.parse(match[2]) : match[2].trim() });
+            entries.push({
+                key: match[1],
+                value: parseJsonValues ? JSON.parse(match[2]) : match[2].trim(),
+            });
         }
 
         regex.lastIndex = 0;
