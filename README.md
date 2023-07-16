@@ -72,6 +72,10 @@ jobs:
             10051: 2023-01-01
             10052: https://github.com/marketplace?type=action
 
+          customfieldsJson: |
+            10057: {"content":[{"content":[{"type":"text","text":"Content for the TextArea custom field"}],"type":"paragraph"}],"type":"doc","version":1}
+            10058: ["value1", "value2]
+
       # this action will only be reached when failOnError was set to false in the previous step
       - name: Print Outputs
         run: |
@@ -316,6 +320,24 @@ Updates the value of custom fields in the Jira ticket. It expects a set of IDs f
 with their associated value, separated by a colon (`:`). One entry per line.
 
 > The value of a custom field can contain colons (`:`) as only the first occurance of a colon per line is
+> interpreted as a delimiter.
+
+The option is ignored when blank.
+
+### Option: customfieldsJson
+
+|          |     |
+| :------- | :-- |
+| Required | no  |
+| Default  |     |
+
+Updates the value of custom fields in the Jira ticket. It expects a set of IDs for the custom fields along
+with their associated JSON encoded value, separated by a colon (`:`). One entry per line.
+
+JSON encoded value is needed when you want to se multi-value custom fields, or more complex ones that
+require [Atlassian Document Format](https://developer.atlassian.com/cloud/jira/platform/apis/document/structure/).
+
+> The value of a custom field can contain colons (`:`) as only the first occurrence of a colon per line is
 > interpreted as a delimiter.
 
 The option is ignored when blank.

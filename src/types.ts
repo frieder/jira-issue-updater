@@ -20,6 +20,7 @@ export type ActionInputs = {
     fixversions: string[];
     labels: string[];
     customfields: string[];
+    customfieldsJson: string[];
     _issueDelimiter: string;
 };
 
