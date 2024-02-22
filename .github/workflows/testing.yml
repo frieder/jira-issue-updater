@@ -1,0 +1,62 @@
+#
+# This workflow file is used for testing during local development with the help of
+# https://github.com/nektos/act.
+#
+
+name: Test GH Action
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test Action
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login
+        uses: atlassian/gajira-login@v3
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_URL }}
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_TOKEN }}
+
+      - name: Update Fields
+        id: updatefields
+        uses: ./
+        with:
+          retries: 1
+          retryDelay: 10
+          timeout: 2000
+          failOnError: true
+          issue: ${{ vars.JIRA_ISSUES }}
+          summary: Some fancy title
+          description: Plaintext only
+          assignee: REMOVE
+          priority: Major
+          duedate: REMOVE
+          resolution: Won't Do
+          components: |
+            - Translation
+            - Search
+            - Navigation
+            - Form
+          fixversions: |
+            - 1.0.0
+            - 1.1.0
+            - 1.2.0
+            - 1.1.0
+          labels: |
+            - security
+            - sonar
+            - github
+            - vanity
+          customfields: |
+            10859: unblocked
+
+      - name: Print Outputs
+        run: |
+          echo "HAS ERRORS: ${{ steps.updatefields.outputs.hasErrors }}"
+          echo "IDs SUCCESS: ${{ steps.updatefields.outputs.successful }}"
+          echo "IDs ERROR: ${{ steps.updatefields.outputs.failed }}"

@@ -59,5 +59,5 @@ inputs:
     description: A list of custom fields with their respective values in JSON. Supports Atlassian Documents and multiple values.
     required: false
 runs:
-  using: node16
+  using: node20
   main: ./dist/index.js

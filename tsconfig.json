@@ -16,7 +16,7 @@
         "strict": true,
         "strictNullChecks": true,
         "strictFunctionTypes": true,
-        "target": "ES2020"
+        "target": "ES2022"
     },
     "exclude": ["**/node_modules", "**/build", "**/test*", "**/*.test.ts"]
 }

@@ -70,5 +70,5 @@ function _getNumber(name: string, defaultValue: number): number {
     if (!value || value.length === 0) {
         return defaultValue;
     }
-    return value.match(/^\d+$/) ? Number(value) : defaultValue;
+    return /^\d+$/.exec(value) ? Number(value) : defaultValue;
 }

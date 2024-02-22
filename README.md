@@ -71,7 +71,6 @@ jobs:
             10050: some value
             10051: 2023-01-01
             10052: https://github.com/marketplace?type=action
-
           customfieldsJson: |
             10057: {"content":[{"content":[{"type":"text","text":"Content for the TextArea custom field"}],"type":"paragraph"}],"type":"doc","version":1}
             10058: ["value1", "value2]
@@ -355,3 +354,18 @@ with the action's output.
 3. `failed` - A list of IDs of issues that failed to get updated. This may be useful to add comments to the tickets
    in question or to report those tickets to a Slack or MSTeams channel. The format is again the same as
    with the `issues` option.
+
+## Test Action
+
+This action can be tested during development with the use of https://github.com/nektos/act.
+
+Please adapt the values accordingly both in the workflow file and in the CLI command.
+
+```
+act -W .github/workflows/testing.yml \
+    -j test \
+    -s JIRA_URL=*** \
+    -s JIRA_EMAIL=*** \
+    -s JIRA_TOKEN=*** \
+    --var JIRA_ISSUES=WEB-123
+```
