@@ -1,0 +1,76 @@
+# A workflow that is triggered by both regular and dependabot PRs.
+# Be aware that dependabot uses its own secret store.
+
+name: Pull Request Check
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  check:
+    name: Test Action
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install NPM Libs
+        run: npm i
+
+      - name: Run Format Check
+        run: npm run format-check
+
+      - name: Run Linter
+        run: npm run lint
+
+      - name: Build Code
+        run: npm run build
+
+      - name: Jira Login
+        uses: frieder/gha-jira-login@v1
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_URL }}
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_TOKEN }}
+
+      - name: Update Fields
+        id: updatefields
+        uses: ./
+        with:
+          retries: 1
+          retryDelay: 10
+          timeout: 2000
+          failOnError: true
+          issue: GHA-1
+          summary: Text Ticket
+          description: The sole purpose of this ticket is for GH actions to perform automated tests against it during automated testing.
+          assignee: REMOVE
+          priority: Medium
+          duedate: REMOVE
+
+      - name: Print Outputs
+        run: |
+          echo "HAS ERRORS: ${{ steps.updatefields.outputs.hasErrors }}"
+          echo "IDs SUCCESS: ${{ steps.updatefields.outputs.successful }}"
+          echo "IDs ERROR: ${{ steps.updatefields.outputs.failed }}"
+
+      - name: Merge PR
+        if: github.event_name == 'pull_request' && github.actor == 'dependabot[bot]'
+        run: gh pr merge --auto --merge --delete-branch "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
