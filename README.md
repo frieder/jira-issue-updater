@@ -1,14 +1,14 @@
 # Jira Issue Updater - Github Action
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/frieder/jira-issue-updater/ci-build.yml?label=Build%20Status)](https://github.com/frieder/jira-issue-updater/actions/workflows/ci-build.yml)
-[![Sonar Coverage](https://img.shields.io/sonar/coverage/frieder_jira-issue-updater/main?server=https%3A%2F%2Fsonarcloud.io&label=Code%20Coverage)](https://sonarcloud.io/project/overview?id=frieder_jira-issue-updater)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/frieder/jira-issue-updater/pr.yml?label=Build%20Status)](https://github.com/frieder/jira-issue-updater/actions/workflows/pr.yml)
 [![Open Issues](https://img.shields.io/github/issues-raw/frieder/jira-issue-updater?label=Open%20Issues)](https://github.com/frieder/jira-issue-updater/issues?q=is%3Aopen+is%3Aissue)
 [![Sonar Issues](https://img.shields.io/sonar/violations/frieder_jira-issue-updater/main?format=long&server=https%3A%2F%2Fsonarcloud.io&label=Sonar%20Violations)](https://sonarcloud.io/project/overview?id=frieder_jira-issue-updater)
+[![Known Vulnerabilities](https://snyk.io/test/github/frieder/jira-issue-updater/badge.svg)](https://snyk.io/test/github/frieder/jira-issue-updater)
 
 A GitHub action to update properties of an existing Jira issue.
 
 > -   Only supports Jira Cloud.
-> -   Requires [Jira Login Action](https://github.com/marketplace/actions/jira-login).
+> -   Requires [Jira Login Action](https://github.com/marketplace/actions/atlassian-jira-login).
 
 ## Usage
 
@@ -22,8 +22,8 @@ jobs:
     name: Update Jira issue
     runs-on: ubuntu-latest
     steps:
-      - name: Login
-        uses: atlassian/gajira-login@v3
+      - name: Jira Login
+        uses: frieder/gha-jira-login@v1
         env:
           JIRA_BASE_URL: ${{ vars.JIRA_BASE_URL }}
           JIRA_USER_EMAIL: ${{ vars.JIRA_USER_EMAIL }}
@@ -362,10 +362,11 @@ This action can be tested during development with the use of https://github.com/
 Please adapt the values accordingly both in the workflow file and in the CLI command.
 
 ```
-act -W .github/workflows/testing.yml \
-    -j test \
+act -W .github/workflows/pr.yml \
+    -j check \
     -s JIRA_URL=*** \
     -s JIRA_EMAIL=*** \
-    -s JIRA_TOKEN=*** \
-    --var JIRA_ISSUES=WEB-123
+    -s JIRA_TOKEN=***
+    
+    #--var JIRA_ISSUES=WEB-123
 ```

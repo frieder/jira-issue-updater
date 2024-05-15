@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened]
 
 jobs:
   ci-build:
@@ -14,17 +18,16 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-      - name: Run npm install
-        run: npm i
-      - name: Run npm build
-        run: npm run build
-      - name: Run npm lint
-        run: npm run lint
+
+      - name: Run npm
+        run: npm run all
+
       - name: Run SonarCloud scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
