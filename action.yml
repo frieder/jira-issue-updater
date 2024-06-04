@@ -1,5 +1,5 @@
 name: Jira Issue Updater
-description: Updates various properties of a Jira issue
+description: Updates several properties of a Jira issue
 author: frieder
 branding:
   icon: edit
