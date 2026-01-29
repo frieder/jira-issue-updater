@@ -18,7 +18,7 @@
         "build"
     ],
     "dependencies": {
-        "@actions/core": "^2.0.3",
+        "@actions/core": "^3.0.0",
         "axios": "^1.13.4",
         "axios-retry": "^4.5.0",
         "yaml": "^2.8.2"
