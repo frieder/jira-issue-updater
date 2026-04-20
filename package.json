@@ -19,7 +19,7 @@
     ],
     "dependencies": {
         "@actions/core": "^3.0.0",
-        "axios": "^1.15.0",
+        "axios": "^1.15.1",
         "axios-retry": "^4.5.0",
         "yaml": "^2.8.3"
     },
